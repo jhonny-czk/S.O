@@ -1,96 +1,88 @@
 #include<iostream>
 #include<cstring>
 #include<string>
+
 using namespace std;
 
-void firstFit(int blockSize[], int m,
-              int processSize[], int n)
+void firstFit(int tamBloco[], int m,
+              int tamProcesso[], int n)
 {
-    // Stores block id of the
-    // block allocated to a process
-    int allocation[n];
+    int alocacao[n]; //bloco alocado para processo
+    memset(alocacao, -1, sizeof(alocacao)); // Nenhum bloco esta inicialmente 
+										   //alocado a nenhum processo 
  
-    // Initially no block is assigned to any process
-    memset(allocation, -1, sizeof(allocation));
- 
-    // pick each process and find suitable blocks
-    // according to its size ad assign to it
+    // escolhe um processo e encontra um bloco que encaixa
     for (int i = 0; i < n; i++)
     {
         for (int j = 0; j < m; j++)
         {
-            if (blockSize[j] >= processSize[i])
+            if (tamBloco[j] >= tamProcesso[i])
             {
-                // allocate block j to p[i] process
-                allocation[i] = j;
+                // aloca o bloco j no processo [i] 
+                alocacao[i] = j;
  
-                // Reduce available memory in this block.
-                blockSize[j] -= processSize[i];
+                // Reduz a memoria disponível no bloco
+                tamBloco[j] -= tamProcesso[i];
  
                 break;
             }
         }
     }
  
-    cout << "\nProcess No.\tProcess Size\tBlock no.\n";
+    cout << "\nNo Processo.\tTamanho Processo\tNo do Bloco.\n";
     for (int i = 0; i < n; i++)
     {
         cout << " " << i+1 << "\t\t"
-             << processSize[i] << "\t\t";
-        if (allocation[i] != -1)
-            cout << allocation[i] + 1;
+             << tamProcesso[i] << "\t\t";
+        if (alocacao[i] != -1)
+            cout << alocacao[i] + 1;
         else
-            cout << "Not Allocated";
+            cout << "Não alocado";
         cout << endl;
     }
 }
  
 
-void bestFit(int blockSize[], int m, int processSize[], int n)
+void bestFit(int tamBloco[], int m, int tamProcesso[], int n)
 {
-    // Stores block id of the block allocated to a
-    // process
-    int allocation[n];
+    int alocacao[n];
+    memset(alocacao, -1, sizeof(alocacao)); // Nenhum bloco esta inicialmente 
+										   //alocado a nenhum processo 
 
-    // Initially no block is assigned to any process
-    memset(allocation, -1, sizeof(allocation));
-
-    // pick each process and find suitable blocks
-    // according to its size ad assign to it
+	// escolhe cada processo e encontra um bloco que encaixa de acordo com o tamanho
     for (int i=0; i<n; i++)
     {
-        // Find the best fit block for current process
-        int bestIdx = -1;
+        //Procura o melhor bloco para o processo que esta para ser alocado
+        int melhorEncaixe = -1;
         for (int j=0; j<m; j++)
         {
-            if (blockSize[j] >= processSize[i])
+            if (tamBloco[j] >= tamProcesso[i])
             {
-                if (bestIdx == -1)
-                    bestIdx = j;
-                else if (blockSize[bestIdx] > blockSize[j])
-                    bestIdx = j;
+                if (melhorEncaixe == -1)
+                    melhorEncaixe = j;
+                else if (tamBloco[melhorEncaixe] > tamBloco[j])
+                    melhorEncaixe = j;
             }
         }
 
-        // If we could find a block for current process
-        if (bestIdx != -1)
+        if (melhorEncaixe != -1) //Caso nao encontre um bloco para o processo atual
         {
-            // allocate block j to p[i] process
-            allocation[i] = bestIdx;
+            // Aloca o bloco j no processo [i] 
+            alocacao[i] = melhorEncaixe;
 
-            // Reduce available memory in this block.
-            blockSize[bestIdx] -= processSize[i];
+            // Reduz a memoria disponível no bloco
+            tamBloco[melhorEncaixe] -= tamProcesso[i];
         }
     }
 
-    cout << "\nProcess No.\tProcess Size\tBlock no.\n";
+    cout << "\nNumero Processo.\tTamanho Processo Size\tNumero Bloco.\n";
     for (int i = 0; i < n; i++)
     {
-        cout << "   " << i+1 << "\t\t" << processSize[i] << "\t\t";
-        if (allocation[i] != -1)
-            cout << allocation[i] + 1;
+        cout << "   " << i+1 << "\t\t" << tamProcesso[i] << "\t\t";
+        if (alocacao[i] != -1)
+            cout << alocacao[i] + 1;
         else
-            cout << "Not Allocated";
+            cout << "Não Alocado";
         cout << endl;
     }
 }
@@ -98,13 +90,13 @@ void bestFit(int blockSize[], int m, int processSize[], int n)
 
 int main()
 {
-    int blockSize[] = {100, 500, 200, 300, 600};
-    int processSize[] = {212, 417, 112, 426};
-    int m = sizeof(blockSize) / sizeof(blockSize[0]);
-    int n = sizeof(processSize) / sizeof(processSize[0]);
- 
-    //firstFit(blockSize, m, processSize, n);
-    //bestFit(blockSize, m, processSize, n);
-  
+    int tamBloco[] = {100, 500, 200, 300, 600};
+    int tamProcesso[] = {212, 417, 112, 426};
+    int m = sizeof(tamBloco) / sizeof(tamBloco[0]);
+    int n = sizeof(tamProcesso) / sizeof(tamProcesso[0]);
+
+	/***Descomentar o algoritmo que vai ser usado***/
+    //firstFit(tamBloco, m, tamProcesso, n);
+    //bestFit(tamBloco, m, tamProcesso, n);
     return 0 ;
 }
