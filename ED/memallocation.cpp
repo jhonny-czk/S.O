@@ -1,7 +1,6 @@
 #include<iostream>
 #include<cstring>
 #include<string>
-
 using namespace std;
 
 void firstFit(int blockSize[], int m,
@@ -106,5 +105,6 @@ int main()
  
     //firstFit(blockSize, m, processSize, n);
     //bestFit(blockSize, m, processSize, n);
+  
     return 0 ;
 }
