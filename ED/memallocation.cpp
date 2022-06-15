@@ -87,15 +87,13 @@ void bestFit(int tamBloco[], int m, int tamProcesso[], int n)
     }
 }
 
-
 int main()
 {
     int tamBloco[] = {100, 500, 200, 300, 600};
     int tamProcesso[] = {212, 417, 112, 426};
     int m = sizeof(tamBloco) / sizeof(tamBloco[0]);
     int n = sizeof(tamProcesso) / sizeof(tamProcesso[0]);
-
-	/***Descomentar o algoritmo que vai ser usado***/
+/***Descomentar o algoritmo que vai ser usado***/
     //firstFit(tamBloco, m, tamProcesso, n);
     //bestFit(tamBloco, m, tamProcesso, n);
     return 0 ;
